@@ -1,11 +1,11 @@
 import { Router } from 'express'
 
-// import userRoutes from './userRoutes'
-// import entryRoutes from './entryRoutes'
+import user from './user'
+import book from './book'
 
 const router: Router = Router()
 
-// router.use('/api/users', userRoutes)
-// router.use('/api/entries', entryRoutes)
+router.use('/api/users', user)
+router.use('/api/books', book)
 
 export default router
