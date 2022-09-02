@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 // TODO: check if i should delete not used variables like port/secret
@@ -9,7 +10,7 @@ const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   secret: process.env.JWT_PRIVATE_KEY,
-  dialect: 'mariadb'
+  dialect: 'mariadb',
 }
 
 export default config
