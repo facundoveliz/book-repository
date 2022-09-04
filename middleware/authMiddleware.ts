@@ -24,7 +24,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       const decoded = jwt.verify(token, secret) as unknown as Decoded
       // searchs for a user with the id of the token and returns it
       // @ts-expect-error TODO: remember to fix this later
-      req.user = await User.findByPk(decoded._id)
+      req.user = await User.findByPk(decoded.id)
       next()
     } catch (err) {
       res.status(401).json({

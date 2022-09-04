@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 import routes from './routes'
-import { sequelize } from './models'
+import sequelize from './models'
 import { errorHandler, notFound } from './middleware/errorHandlerMiddleware'
 
 const app = express()

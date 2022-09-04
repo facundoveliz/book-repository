@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import * as Yup from 'yup'
 
-import { sequelize } from './index'
+import sequelize from './index'
 import { Book } from './book'
 
 export const User = sequelize.define('user', {
