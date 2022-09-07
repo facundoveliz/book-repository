@@ -109,8 +109,8 @@ export const putUser = async (req: Request, res: Response) => {
     password: user.password,
   }
 
-  if (req.body.name !== user.name && req.body.name.length >= 1) newUser.name = req.body.name
-  if (req.body.email !== user.email && req.body.name.length >= 1) {
+  if (req.body.name !== user.name && req.body.name?.length >= 1) newUser.name = req.body.name
+  if (req.body.email !== user.email && req.body.name?.length >= 1) {
     // checks if the email is exists
     const emailCheck = await User.findOne({
       where: { email: req.body.email },
@@ -124,7 +124,7 @@ export const putUser = async (req: Request, res: Response) => {
     }
     newUser.email = req.body.email
   }
-  if (req.body.password.length >= 1) {
+  if (req.body.password?.length >= 1) {
     newUser.password = req.body.password
     // hash the password
     const salt = await bcrypt.genSalt(10)
@@ -140,16 +140,10 @@ export const putUser = async (req: Request, res: Response) => {
 }
 
 export const deleteUser = async (req: Request, res: Response) => {
-  await User.destroy({ where: { id: req.user?.id } })
-    .then(() => res.status(200).json({
-      ok: true,
-      msg: 'User deleted',
-    }))
-    .catch((err) => res.status(404).json({
-      ok: false,
-      msg: 'User not founded',
-      result: err,
-    }))
+  await User.destroy({ where: { id: req.user?.id } }).then(() => res.status(200).json({
+    ok: true,
+    msg: 'User deleted',
+  }))
 }
 
 export default router

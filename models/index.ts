@@ -1,22 +1,24 @@
 import { Sequelize } from 'sequelize'
 import config from '../config/config'
 
-export const sequelize = new Sequelize(
-  // @ts-expect-error
-  config.database,
-  config.username,
-  config.password,
+const sequelize = new Sequelize(
+  // @ts-expect-error unfixable sequelize error
+  config.development.database,
+  config.development.username,
+  config.development.password,
   {
-    host: config.host,
-    dialect: config.dialect,
+    host: config.development.host,
+    dialect: config.development.dialect,
   },
 )
 
 sequelize // TODO: remember to delete this on production
-  .sync({ alter: true })
+  .sync()
   .then(() => {
     console.log('fine')
   })
   .catch((err) => {
     console.log('err: ', err)
   })
+
+export default sequelize

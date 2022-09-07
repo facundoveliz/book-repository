@@ -32,9 +32,10 @@ export const postBook = async (req: Request, res: Response) => {
         review: req.body.review,
         rate: req.body.rate,
         userId: req.user?.id,
-      }).then(() => res.status(200).json({
+      }).then((book) => res.status(200).json({
         ok: true,
         msg: 'Book created',
+        result: book,
       }))
     })
     .catch((err) => res.status(400).json({
@@ -63,9 +64,10 @@ export const putBook = async (req: Request, res: Response) => {
             userId: req.user?.id,
           },
         },
-      ).then(() => res.status(200).json({
+      ).then((book) => res.status(200).json({
         ok: true,
         msg: 'Book updated',
+        result: book,
       }))
     })
     .catch((err) => res.status(400).json({
