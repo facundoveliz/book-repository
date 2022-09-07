@@ -2,7 +2,7 @@ import { Request as Req, Response as Res, NextFunction as Next } from 'express'
 
 interface User {
   user?: {
-    id: string;
+    id: number;
     name: string;
     email: string;
     password: string;

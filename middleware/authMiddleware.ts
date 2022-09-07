@@ -1,9 +1,9 @@
 import jwt, { Secret } from 'jsonwebtoken'
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from '../types'
 import { User } from '../models/user'
 
 interface Decoded {
-  _id: string;
+  id: number;
   iat: Date;
   exp: Date;
 }

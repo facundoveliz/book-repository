@@ -12,13 +12,4 @@ const sequelize = new Sequelize(
   },
 )
 
-sequelize // TODO: remember to delete this on production
-  .sync()
-  .then(() => {
-    console.log('fine')
-  })
-  .catch((err) => {
-    console.log('err: ', err)
-  })
-
 export default sequelize

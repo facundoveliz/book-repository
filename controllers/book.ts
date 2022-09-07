@@ -25,7 +25,6 @@ export const postBook = async (req: Request, res: Response) => {
   schema
     .validate(req.body)
     .then(async () => {
-      // FIX: this ts error
       Book.create({
         name: req.body.name,
         status: req.body.status,

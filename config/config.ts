@@ -2,7 +2,6 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// TODO: check if i should delete not used variables like port/secret
 const config = {
   development: {
     database: process.env.DB_NAME,
@@ -10,7 +9,6 @@ const config = {
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    secret: process.env.JWT_PRIVATE_KEY,
     dialect: 'mariadb',
   },
   test: {
@@ -19,7 +17,6 @@ const config = {
     password: process.env.DB_PASSWORD_TEST,
     host: process.env.DB_HOST_TEST,
     port: process.env.DB_PORT_TEST,
-    secret: process.env.JWT_PRIVATE_KEY,
     dialect: 'mariadb',
   },
 }
