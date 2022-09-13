@@ -3,15 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.8",
+    "axios": "^0.27.2",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-icons": "^4.4.0",
+    "redux": "^4.2.0",
+    "styled-components": "^5.3.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.5",
@@ -20,8 +27,9 @@
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.34.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
+    "babel-plugin-styled-components": "^2.0.6",
     "eslint": "^8.0.1",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "12.2.5",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
