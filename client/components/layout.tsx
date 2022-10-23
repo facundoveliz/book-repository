@@ -1,7 +1,5 @@
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
-import Footer from './footer';
-import Header from './header';
 
 type Children = {
   children: ReactNode;
@@ -18,9 +16,7 @@ export default function Layout({ children }: Children) {
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Header />
       {children}
-      <Footer />
     </>
   );
 }

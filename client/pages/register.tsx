@@ -6,17 +6,8 @@ import * as yup from 'yup';
 import Link from 'next/link';
 
 import { registerUser } from '../api/users';
-import { Button } from '../components/styles/Button';
-import {
-  Form,
-  Wrapper,
-  Input,
-  InputWrapper,
-  Label,
-  SubmitWrapper,
-} from '../components/styles/Form';
 
-type IFormInputs = {
+type Iforminputs = {
   username: string;
   email: string;
   password: string;
@@ -62,11 +53,11 @@ const Register: RegisterType = function Register() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<IFormInputs>({
+  } = useForm<Iforminputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: IFormInputs) =>
+  const onSubmit = (data: Iforminputs) =>
     registerUser(data).then((res) => {
       if (res.toString() === 'Invalid email or password') {
         setError('email', {
@@ -76,49 +67,41 @@ const Register: RegisterType = function Register() {
     });
 
   return (
-    <Wrapper>
+    <div>
       <h1>Register</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputWrapper>
-          <Label>Username</Label>
-          <Input error={!!errors.username} {...register('username')} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>Username</label>
+          <input {...register('username')} />
           <p>{errors.username?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <InputWrapper>
-          <Label>Email Adress</Label>
-          <Input error={!!errors.email} {...register('email')} />
+        <div>
+          <label>Email Adress</label>
+          <input {...register('email')} />
           <p>{errors.email?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <InputWrapper>
-          <Label>Password</Label>
-          <Input
-            error={!!errors.password}
-            {...register('password')}
-            type="password"
-          />
+        <div>
+          <label>Password</label>
+          <input {...register('password')} type="password" />
           <p>{errors.password?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <InputWrapper>
-          <Label>Confirm password</Label>
-          <Input
-            error={!!errors.passwordConfirm}
-            {...register('passwordConfirm')}
-            type="password"
-          />
+        <div>
+          <label>Confirm password</label>
+          <input {...register('passwordConfirm')} type="password" />
           <p>{errors.passwordConfirm?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <SubmitWrapper direction="column">
-          <Button type="submit">Register</Button>
-          <Link passHref href="/login">
+        <div>
+          <button type="submit">Register</button>
+          <Link href="/login">
             <p>I already have an account</p>
           </Link>
-        </SubmitWrapper>
-      </Form>
-    </Wrapper>
+        </div>
+      </form>
+    </div>
   );
 };
 

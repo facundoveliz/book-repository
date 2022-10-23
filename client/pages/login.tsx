@@ -5,18 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { loginUser } from '../api/users';
-import { Button } from '../components/styles/Button';
 import Link from 'next/link';
-import {
-  Form,
-  Wrapper,
-  Input,
-  InputWrapper,
-  Label,
-  SubmitWrapper,
-} from '../components/styles/Form';
 
-interface IFormInputs {
+interface Iforminputs {
   email: string;
   password: string;
 }
@@ -43,7 +34,7 @@ const Login: LoginType = function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<IFormInputs>({
+  } = useForm<Iforminputs>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: 'johndoe@gmail.com',
@@ -51,7 +42,7 @@ const Login: LoginType = function Login() {
     },
   });
 
-  const onSubmit = (data: IFormInputs) =>
+  const onSubmit = (data: Iforminputs) =>
     loginUser(data).then((res) => {
       // NOTE: probably not the best choice, i made a lot of
       // verifications of the same type to get to this, but
@@ -71,33 +62,29 @@ const Login: LoginType = function Login() {
   }, []);
 
   return (
-    <Wrapper>
+    <div>
       <h1>Login</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputWrapper>
-          <Label>Email Adress</Label>
-          <Input error={!!errors.email} {...register('email')} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>Email Adress</label>
+          <input {...register('email')} />
           <p>{errors.email?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <InputWrapper>
-          <Label>Password</Label>
-          <Input
-            error={!!errors.password}
-            {...register('password')}
-            type="password"
-          />
+        <div>
+          <label>Password</label>
+          <input {...register('password')} type="password" />
           <p>{errors.password?.message}</p>
-        </InputWrapper>
+        </div>
 
-        <SubmitWrapper direction="column">
-          <Button type="submit">Submit</Button>
-          <Link passHref href="/register">
+        <div>
+          <button type="submit">Submit</button>
+          <Link href="/register">
             <p>Create an account</p>
           </Link>
-        </SubmitWrapper>
-      </Form>
-    </Wrapper>
+        </div>
+      </form>
+    </div>
   );
 };
 
