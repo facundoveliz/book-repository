@@ -20,17 +20,17 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => response,
-  // (error) => {
-  //   if (error.response) {
-  //     if (error.response.status === 401) {
-  //       window.location.href = '/login';
-  //     }
-  //     if (error.response.data.msg === 'Invalid email or password') {
-  //       return error.response.data.msg;
-  //     }
-  //   }
-  //   return console.log(error);
-  // },
+  (error) => {
+    if (error.response) {
+      if (error.response.status === 401) {
+        window.location.href = '/login';
+      }
+      if (error.response.data.msg === 'Invalid email or password') {
+        return error.response.data.msg;
+      }
+    }
+    return console.log(error);
+  },
 );
 
 export default axiosClient;
