@@ -32,7 +32,6 @@ const Login: LoginType = function Login() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<Iforminputs>({
     resolver: yupResolver(schema),
@@ -42,18 +41,7 @@ const Login: LoginType = function Login() {
     },
   });
 
-  const onSubmit = (data: Iforminputs) =>
-    loginUser(data).then((res) => {
-      // NOTE: probably not the best choice, i made a lot of
-      // verifications of the same type to get to this, but
-      // for the moment i don't find another relatively easy
-      // way of make this
-      if (res.toString() === 'Invalid email or password') {
-        setError('email', {
-          message: res.toString(),
-        });
-      }
-    });
+  const onSubmit = (data: Iforminputs) => loginUser(data);
 
   useEffect(() => {
     if (localStorage.getItem('x-auth-token')) {

@@ -57,20 +57,12 @@ const Profile: NextPage = function Profile() {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     reset,
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: IFormInputs) =>
-    putUser(data).then((res) => {
-      if (res?.toString() === 'Invalid email or password') {
-        setError('email', {
-          message: 'Email already in use',
-        });
-      }
-    });
+  const onSubmit = (data: IFormInputs) => putUser(data);
 
   const getUserRequest = async () => {
     setLoading(true);

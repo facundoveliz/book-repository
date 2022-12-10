@@ -52,19 +52,11 @@ const Register: RegisterType = function Register() {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm<Iforminputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: Iforminputs) =>
-    registerUser(data).then((res) => {
-      if (res.toString() === 'Invalid email or password') {
-        setError('email', {
-          message: 'Email already in use',
-        });
-      }
-    });
+  const onSubmit = (data: Iforminputs) => registerUser(data);
 
   return (
     <div>
