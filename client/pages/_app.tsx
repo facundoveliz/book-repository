@@ -2,6 +2,7 @@ import React, { ReactElement, ReactNode } from 'react';
 import { AppProps } from 'next/app';
 import Layout from '../components/layout';
 import { NextPage } from 'next';
+import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

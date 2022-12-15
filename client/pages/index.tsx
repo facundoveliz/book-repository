@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import type { NextPage } from "next";
-import axios from "axios";
-import Book from "../components/book";
+import React, { useState } from 'react';
+import type { NextPage } from 'next';
+import axios from 'axios';
+import Book from '../components/book';
 
 const Home: NextPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [books, setBooks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     setLoading(true);
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=11`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=11`,
       )
       .then((res) => {
         setBooks(res.data.items);
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const loadMore = async () => {
     await axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=8&startIndex=${books.length}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=8&startIndex=${books.length}`,
       )
       .then((res) => {
         setBooks((oldBooks) => [...oldBooks, ...res.data.items]);
@@ -37,8 +37,8 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <h3>Bookshelves</h3>
-      <ul className="font-bold">
+      <h3 className="text-3xl text-xl font-bold underline">Bookshelves</h3>
+      <ul className="bg-gray-500">
         <ul>All(24)</ul>
         <ul>Read</ul>
         <ul>Want to Read</ul>
