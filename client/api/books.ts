@@ -3,9 +3,10 @@ import axiosClient from './axiosClient';
 const booksRoute = '/api/books/';
 
 type Data = {
-  category: string;
-  income: boolean;
-  amount: number;
+  name: string;
+  status: string;
+  review: string;
+  rate: number;
 };
 
 export async function getBooks() {

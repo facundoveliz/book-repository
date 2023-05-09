@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { AppProps } from 'next/app';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { NextPage } from 'next';
 import '../styles/globals.css';
 

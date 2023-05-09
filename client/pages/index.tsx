@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import axios from 'axios';
-import Book from '../components/book';
+import Book from '../components/Book';
 
 const Home: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +16,7 @@ const Home: NextPage = () => {
       )
       .then((res) => {
         setBooks(res.data.items);
+        console.log(books);
       });
     setLoading(false);
   };
@@ -37,33 +38,37 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <h3 className="text-3xl text-xl font-bold underline">Bookshelves</h3>
-      <ul className="bg-gray-500">
-        <ul>All(24)</ul>
-        <ul>Read</ul>
-        <ul>Want to Read</ul>
-        <ul>Currently Reading</ul>
-      </ul>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="flex flex-col w-1/2 m-auto my-8"
+      >
         <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />
-        <button type="submit">Submit</button>
+        <button type="submit" className="mt-2 btn btn-primary">
+          Submit
+        </button>
       </form>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div>
+        <div className="flex justify-center">
           {!books ? (
             <div>No books founded 😔</div>
           ) : (
-            <div>
+            <div className="w-full grid grid-cols-auto-fit gap-8 m-8 ">
               {books.map((b) => (
                 <Book book={b} key={b.volumeInfo.id} />
               ))}
-              <button onClick={() => loadMore()}>Load more</button>
             </div>
           )}
         </div>
       )}
+      <div className="w-full flex justify-center">
+        {books && books.length >= 1 ? (
+          <button className="btn-primary my-8" onClick={() => loadMore()}>
+            Load more
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 };
