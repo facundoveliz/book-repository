@@ -8,16 +8,38 @@ const Home: NextPage = () => {
   const [books, setBooks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const URL = 'http://openlibrary.org/search.json?title=';
+
   const getBookRequest = async () => {
     setLoading(true);
-    axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=11`,
-      )
-      .then((res) => {
-        setBooks(res.data.items);
-        console.log(books);
-      });
+    await axios.get(`${URL}${searchTerm}`).then((res) => {
+      if (res) {
+        const newBooks = res.data.docs?.slice(0, 20).map((bookSingle) => {
+          const {
+            key,
+            author_name,
+            cover_i,
+            edition_count,
+            first_publish_year,
+            title,
+          } = bookSingle;
+
+          return {
+            id: key,
+            author: author_name,
+            cover: cover_i,
+            edition_count: edition_count,
+            first_publish_year: first_publish_year,
+            title: title,
+          };
+        });
+
+        console.log(res.data);
+        setBooks(newBooks);
+      } else {
+        setBooks([]);
+      }
+    });
     setLoading(false);
   };
 
@@ -56,7 +78,7 @@ const Home: NextPage = () => {
           ) : (
             <div className="w-full grid grid-cols-auto-fit gap-8 m-8 ">
               {books.map((b) => (
-                <Book book={b} key={b.volumeInfo.id} />
+                <Book book={b} key={b.id} />
               ))}
             </div>
           )}

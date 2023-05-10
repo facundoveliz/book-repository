@@ -1,5 +1,6 @@
+import axios from 'axios';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddBook from './AddBook';
 
 type VolumeInfoType = {
@@ -10,7 +11,7 @@ type BookType = {
   title: string;
   authors: [];
   categories: [];
-  imageLinks: ImageLinksType;
+  cover: ImageLinksType;
 };
 
 type ImageLinksType = {
@@ -24,11 +25,23 @@ type BookProps = {
 const Book = ({ book }: BookProps) => {
   const [modal, setModal] = useState(false);
 
-  const { title, imageLinks } = book.volumeInfo;
+  const URL = 'https://openlibrary.org';
+
+  const getBookDetailRequest = async () => {
+    await axios.get(`${URL}${book.id}.json`).then((res) => {
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    getBookDetailRequest();
+  }, []);
+
+  const { title, cover } = book;
   return (
     <div>
       {modal ? (
-        <AddBook setModal={setModal} title={title} imageLinks={imageLinks} />
+        <AddBook setModal={setModal} title={title} cover={cover} />
       ) : null}
       <div className="w-52 group">
         <div className="hidden group-hover:flex w-[200px] h-[360px] absolute justify-end items-end z-10">
@@ -44,9 +57,11 @@ const Book = ({ book }: BookProps) => {
           height={1920}
           width={1080}
           src={
-            // TODO: default image for non existent cover
-            imageLinks ? imageLinks.thumbnail : '/default-cover.png'
+            cover
+              ? `https://covers.openlibrary.org/b/id/${cover}-L.jpg`
+              : '/default-cover.png'
           }
+          alt="cover"
           className="rounded-md shadow"
         />
         <h2 className="font-bold text-sm">{title}</h2>

@@ -3,6 +3,6 @@ module.exports = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["books.google.com"],
+    domains: ["covers.openlibrary.org"],
   },
 };
