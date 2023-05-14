@@ -6,8 +6,9 @@ import * as yup from 'yup';
 
 import { loginUser } from '../api/users';
 import Link from 'next/link';
+import { useMutation } from 'react-query';
 
-interface Iforminputs {
+interface IFormInputs {
   email: string;
   password: string;
 }
@@ -33,7 +34,8 @@ const Login: LoginType = function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Iforminputs>({
+    setError,
+  } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: 'johndoe@gmail.com',
@@ -41,7 +43,22 @@ const Login: LoginType = function Login() {
     },
   });
 
-  const onSubmit = (data: Iforminputs) => loginUser(data);
+  const loginUserMutation = useMutation(loginUser, {
+    onSuccess: () => {
+      window.location.href = '/login';
+    },
+    onError: (res: any) => {
+      if (res.data.msg === 'Invalid email or password') {
+        setError('email', {
+          message: 'Email already in use',
+        });
+      }
+    },
+  });
+
+  const onSubmit = (data: IFormInputs) => {
+    loginUserMutation.mutate(data);
+  };
 
   useEffect(() => {
     if (localStorage.getItem('x-auth-token')) {
@@ -66,7 +83,9 @@ const Login: LoginType = function Login() {
         </div>
 
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={loginUserMutation.isLoading}>
+            Submit
+          </button>
           <Link href="/register">
             <p>Create an account</p>
           </Link>

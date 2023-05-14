@@ -11,7 +11,7 @@ type BookType = {
   title: string;
   authors: [];
   categories: [];
-  cover: ImageLinksType;
+  cover_i: ImageLinksType;
 };
 
 type ImageLinksType = {
@@ -25,23 +25,21 @@ type BookProps = {
 const Book = ({ book }: BookProps) => {
   const [modal, setModal] = useState(false);
 
-  const URL = 'https://openlibrary.org';
+  const URL = 'https://openlibrary.org/works/';
 
   const getBookDetailRequest = async () => {
-    await axios.get(`${URL}${book.id}.json`).then((res) => {
-      console.log(res);
-    });
+    await axios.get(`${URL}${book.id}.json`).then((res) => console.log(res));
   };
 
   useEffect(() => {
-    getBookDetailRequest();
+    // getBookDetailRequest();
   }, []);
 
-  const { title, cover } = book;
+  const { title, cover_i } = book;
   return (
     <div>
       {modal ? (
-        <AddBook setModal={setModal} title={title} cover={cover} />
+        <AddBook setModal={setModal} title={title} cover_i={cover_i} />
       ) : null}
       <div className="w-52 group">
         <div className="hidden group-hover:flex w-[200px] h-[360px] absolute justify-end items-end z-10">
@@ -57,8 +55,8 @@ const Book = ({ book }: BookProps) => {
           height={1920}
           width={1080}
           src={
-            cover
-              ? `https://covers.openlibrary.org/b/id/${cover}-L.jpg`
+            cover_i
+              ? `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg`
               : '/default-cover.png'
           }
           alt="cover"

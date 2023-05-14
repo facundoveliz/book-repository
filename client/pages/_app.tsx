@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import Layout from '../components/Layout';
 import { NextPage } from 'next';
 import '../styles/globals.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -13,10 +14,14 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const queryClient = new QueryClient();
+
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </QueryClientProvider>
   );
 }
 

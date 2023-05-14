@@ -6,8 +6,9 @@ import * as yup from 'yup';
 import Link from 'next/link';
 
 import { registerUser } from '../api/users';
+import { useMutation } from 'react-query';
 
-type Iforminputs = {
+type IFormInputs = {
   username: string;
   email: string;
   password: string;
@@ -52,11 +53,33 @@ const Register: RegisterType = function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Iforminputs>({
+    setError,
+  } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: Iforminputs) => registerUser(data);
+  const registerUserMutation = useMutation(registerUser, {
+    onSuccess: () => {
+      window.location.href = '/login';
+    },
+    onError: (res: any) => {
+      if (res.data.msg === 'Invalid email or password') {
+        setError('email', {
+          message: 'Email already in use',
+        });
+      }
+    },
+  });
+
+  const onSubmit = (data: IFormInputs) => {
+    registerUserMutation.mutate(data);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('x-auth-token')) {
+      window.location.href = '/';
+    }
+  }, []);
 
   return (
     <div>
@@ -87,7 +110,9 @@ const Register: RegisterType = function Register() {
         </div>
 
         <div>
-          <button type="submit">Register</button>
+          <button type="submit" disabled={registerUserMutation.isLoading}>
+            Register
+          </button>
           <Link href="/login">
             <p>I already have an account</p>
           </Link>

@@ -3,17 +3,7 @@ import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {
-  Wrapper,
-  Form,
-  Input,
-  InputWrapper,
-  Label,
-  SubmitWrapper,
-} from '../components/styles/Form';
-import { Button, SecondaryButton } from '../components/styles/Button';
 import { deleteUser, getUser, putUser } from '../api/users';
-import { Loading } from '../components/styles/Loading';
 
 type IFormInputs = {
   username: string;
@@ -92,51 +82,49 @@ const Profile: NextPage = function Profile() {
   return (
     <>
       {loading ? (
-        <Loading>Loading...</Loading>
+        <div>div...</div>
       ) : (
-        <Wrapper>
+        <div>
           <h1>Profile</h1>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputWrapper>
-              <Label>Username</Label>
-              <Input error={!!errors.password} {...register('username')} />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <p>Username</p>
+              <input error={!!errors.password} {...register('username')} />
               <p>{errors.username?.message}</p>
-            </InputWrapper>
+            </div>
 
-            <InputWrapper>
-              <Label>Email Adress</Label>
-              <Input error={!!errors.email} {...register('email')} />
+            <div>
+              <p>Email Adress</p>
+              <input error={!!errors.email} {...register('email')} />
               <p>{errors.email?.message}</p>
-            </InputWrapper>
+            </div>
 
-            <InputWrapper>
-              <Label>Password</Label>
-              <Input
+            <div>
+              <p>Password</p>
+              <input
                 error={!!errors.password}
                 {...register('password')}
                 type="password"
               />
               <p>{errors.password?.message}</p>
-            </InputWrapper>
+            </div>
 
-            <InputWrapper>
-              <Label>Confirm password</Label>
-              <Input
+            <div>
+              <p>Confirm password</p>
+              <input
                 error={!!errors.passwordConfirm}
                 {...register('passwordConfirm')}
                 type="password"
               />
               <p>{errors.passwordConfirm?.message}</p>
-            </InputWrapper>
+            </div>
 
-            <SubmitWrapper direction="row">
-              <SecondaryButton onClick={() => handleDelete()}>
-                Delete account
-              </SecondaryButton>
-              <Button type="submit">Accept</Button>
-            </SubmitWrapper>
-          </Form>
-        </Wrapper>
+            <div>
+              <button onClick={() => handleDelete()}>Delete account</button>
+              <button type="submit">Accept</button>
+            </div>
+          </form>
+        </div>
       )}
     </>
   );

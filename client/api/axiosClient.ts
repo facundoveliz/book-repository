@@ -4,7 +4,7 @@ const axiosClient = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_PRODUCTION ||
     process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_LOCAL,
-  timeout: 60000,
+  timeout: 1200000,
 });
 
 axiosClient.interceptors.request.use(
@@ -15,21 +15,23 @@ axiosClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => console.log(error),
+  (error) => {
+    throw error.response;
+  },
 );
 
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    const token = localStorage.getItem('x-auth-token');
     if (error.response) {
       if (error.response.status === 401) {
-        window.location.href = '/login';
+        if (!token) {
+          window.location.href = '/login';
+        }
       }
-      if (error.response.data.msg === 'Invalid email or password') {
-        return error.response.data.msg;
-      }
+      throw error.response;
     }
-    return console.log(error);
   },
 );
 

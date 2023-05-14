@@ -2,61 +2,47 @@ import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import axios from 'axios';
 import Book from '../components/Book';
+import { getUser } from '../api/users';
+import { useMutation, useQuery } from 'react-query';
 
 const Home: NextPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [books, setBooks] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const URL = 'http://openlibrary.org/search.json?title=';
 
+  // GET request from API
   const getBookRequest = async () => {
-    setLoading(true);
-    await axios.get(`${URL}${searchTerm}`).then((res) => {
-      if (res) {
-        const newBooks = res.data.docs?.slice(0, 20).map((bookSingle) => {
-          const {
-            key,
-            author_name,
-            cover_i,
-            edition_count,
-            first_publish_year,
-            title,
-          } = bookSingle;
-
-          return {
-            id: key,
-            author: author_name,
-            cover: cover_i,
-            edition_count: edition_count,
-            first_publish_year: first_publish_year,
-            title: title,
-          };
-        });
-
-        console.log(res.data);
-        setBooks(newBooks);
-      } else {
-        setBooks([]);
-      }
-    });
-    setLoading(false);
+    const res = await axios.get(`${URL}${searchTerm}`);
+    return res.data.docs;
   };
 
-  const loadMore = async () => {
-    await axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=8&startIndex=${books.length}`,
-      )
-      .then((res) => {
-        setBooks((oldBooks) => [...oldBooks, ...res.data.items]);
-      });
+  // GET request from current logged user
+  const getUserRequest = async () => {
+    const { data } = await getUser();
+    console.log(data.result)
+    return data.result;
   };
+
+  const getBooksMutation = useMutation(getBookRequest, {
+    onSuccess: (res) => {
+      setBooks(res);
+    },
+  });
+  const user = useQuery('user', getUserRequest);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getBookRequest();
+    getBooksMutation.mutate(searchTerm);
   };
+
+  if (user.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (user.isError) {
+    return <div>An error has ocurred!</div>;
+  }
 
   return (
     <div>
@@ -69,28 +55,23 @@ const Home: NextPage = () => {
           Submit
         </button>
       </form>
-      {loading ? (
+      {getBooksMutation.isLoading ? (
         <div>Loading...</div>
+      ) : getBooksMutation.isError ? (
+        <div>An error has ocurred!</div>
       ) : (
         <div className="flex justify-center">
           {!books ? (
             <div>No books founded 😔</div>
           ) : (
             <div className="w-full grid grid-cols-auto-fit gap-8 m-8 ">
-              {books.map((b) => (
-                <Book book={b} key={b.id} />
+              {books.map((book) => (
+                <Book book={book} key={book.key} />
               ))}
             </div>
           )}
         </div>
       )}
-      <div className="w-full flex justify-center">
-        {books && books.length >= 1 ? (
-          <button className="btn-primary my-8" onClick={() => loadMore()}>
-            Load more
-          </button>
-        ) : null}
-      </div>
     </div>
   );
 };
