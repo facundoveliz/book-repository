@@ -10,10 +10,10 @@ interface User {
 }
 
 export interface IBook {
-  name: string;
+  book_id: string;
   status: string;
   review: string;
-  rate: number;
+  score: number;
 }
 
 export type Request = Req & User;

@@ -3,24 +3,24 @@ import axiosClient from './axiosClient';
 const booksRoute = '/api/books/';
 
 type Data = {
-  name: string;
+  book_id: string;
   status: string;
   review: string;
-  rate: number;
+  score: number;
 };
 
 export async function getBooks() {
   return axiosClient.get(booksRoute);
 }
 
-export async function postBooks(data: Data) {
+export async function postBook(data: Data) {
   return axiosClient.post(booksRoute, data);
 }
 
-export async function putBooks(id: string, data: Data) {
+export async function putBook(id: string, data: Data) {
   return axiosClient.put(`${booksRoute}${id}`, data);
 }
 
-export async function deleteBooks(id: string) {
+export async function deleteBook(id: string) {
   return axiosClient.delete(`${booksRoute}${id}`);
 }

@@ -26,10 +26,10 @@ export const postBook = async (req: Request, res: Response) => {
     .validate(req.body)
     .then(async () => {
       Book.create({
-        name: req.body.name,
+        book_id: req.body.book_id,
         status: req.body.status,
         review: req.body.review,
-        rate: req.body.rate,
+        score: req.body.score,
         userId: req.user?.id,
       }).then((book) => res.status(200).json({
         ok: true,
@@ -50,10 +50,10 @@ export const putBook = async (req: Request, res: Response) => {
     .then(async () => {
       await Book.update(
         {
-          name: req.body.name,
+          book_id: req.body.book_id,
           status: req.body.status,
           review: req.body.review,
-          rate: req.body.rate,
+          score: req.body.score,
         },
         {
           where: {

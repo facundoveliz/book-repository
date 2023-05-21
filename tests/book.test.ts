@@ -59,10 +59,10 @@ describe('POST /api/book', () => {
     await request(app)
       .post('/api/books')
       .send({
-        name: 'The Name of the Wind',
+        book_id: 'The Name of the Wind',
         status: 'read',
         review: 'Its a good book',
-        rate: 5,
+        score: 5,
       })
       .set({ Authorization: `Bearer ${token}` })
       .expect(200)
@@ -79,10 +79,10 @@ describe('POST /api/book', () => {
     await request(app)
       .post('/api/books')
       .send({
-        name: 'The Name of the Wind',
+        book_id: 'The Name of the Wind',
         status: 'read',
         review: 'Its a good book',
-        rate: 5,
+        score: 5,
       })
       .expect(401)
       .then(async (res) => {
@@ -97,10 +97,10 @@ describe('POST /api/book', () => {
     await request(app)
       .post('/api/books')
       .send({
-        name: 'The Name of the Wind',
+        book_id: 'The Name of the Wind',
         status: 'readed', // should be "read"
         review: 'Its a good book',
-        rate: 5,
+        score: 5,
       })
       .set({ Authorization: `Bearer ${token}` })
       .expect(400)
@@ -145,10 +145,10 @@ describe('PUT /api/book', () => {
     await request(app)
       .put(`/api/books/${id}`)
       .send({
-        name: 'The Name of the Wind',
+        book_id: 'The Name of the Wind',
         status: 'to-read',
         review: 'Its a very good book',
-        rate: 5,
+        score: 5,
       })
       .set({ Authorization: `Bearer ${token}` })
       .expect(200)
@@ -164,10 +164,10 @@ describe('PUT /api/book', () => {
     await request(app)
       .put(`/api/books/${id}`)
       .send({
-        name: 'The Name of the Wind',
+        book_id: 'The Name of the Wind',
         status: 'to-read',
         review: 'Its a very good book',
-        rate: 5,
+        score: 5,
       })
       .expect(401)
       .then(async (res) => {
