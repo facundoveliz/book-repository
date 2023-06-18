@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.8",
+    "@tanstack/react-table": "^8.9.1",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
     "next": "12.2.5",
