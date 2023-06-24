@@ -95,12 +95,12 @@ const UserBooks = () => {
       ) : status === 'error' || getBooksDetailMutation.isError ? (
         <div>An error has occurred!</div>
       ) : (
-        <div className="w-11/12 m-auto">
-          <h1 className="font-bold text-2xl mt-4">Readed</h1>
+        <div className="m-auto w-11/12">
+          <h1 className="m-4 text-2xl font-bold">Readed</h1>
           <BooksTable userBooks={filteredBooks.read} />
-          <h1 className="font-bold text-2xl mt-4">To read</h1>
+          <h1 className="mt-4 text-2xl font-bold">To read</h1>
           <BooksTable userBooks={filteredBooks.toRead} />
-          <h1 className="font-bold text-2xl mt-4">Reading</h1>
+          <h1 className="mt-4 text-2xl font-bold">Reading</h1>
           <BooksTable userBooks={filteredBooks.currentlyReading} />
         </div>
       )}

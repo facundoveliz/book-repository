@@ -5,7 +5,6 @@ import {
   getCoreRowModel,
   useReactTable,
   getSortedRowModel,
-  getPaginationRowModel,
 } from '@tanstack/react-table';
 import Image from 'next/image';
 
@@ -25,11 +24,11 @@ const columnHelper = createColumnHelper<BookType>();
 
 const columns = [
   columnHelper.accessor('covers', {
-    header: 'COVER',
+    header: 'Cover',
     cell: (info) => (
       <Image
-        width={124}
-        height={220}
+        width={62}
+        height={110}
         src={
           info.getValue()
             ? `https://covers.openlibrary.org/b/id/${info.row.original.covers[0]}-L.jpg`
@@ -41,19 +40,19 @@ const columns = [
     ),
   }),
   columnHelper.accessor('title', {
-    header: 'TITLE',
+    header: 'Title',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('status', {
-    header: 'STATUS',
+    header: 'Status',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('review', {
-    header: 'REVIEW',
+    header: 'Review',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('score', {
-    header: 'SCORE',
+    header: 'Score',
     cell: (info) => info.getValue(),
   }),
 ];
@@ -69,12 +68,11 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
     <>
-      <table className="w-full border-separate border-spacing-y-8 bg-red-800">
+      <table className="mt-4 w-full border-separate border-spacing-y-0 rounded-lg bg-background-variant">
         <thead className="text-left">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -83,7 +81,7 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="text-xl overflow-hidden cursor-pointer select-none"
+                    className="cursor-pointer select-none overflow-hidden px-8 text-sm"
                   >
                     {header.isPlaceholder ? null : (
                       <div
@@ -116,7 +114,7 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
             .rows.slice(0, 10)
             .map((row) => {
               return (
-                <tr key={row.id}>
+                <tr key={row.id} className="hover:bg-primary">
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td key={cell.id}>
@@ -132,44 +130,6 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
             })}
         </tbody>
       </table>
-      <div className="flex items-center gap-2">
-        <span className="flex items-center gap-1">
-          <p>
-            {table.getState().pagination.pageIndex + 1} of{' '}
-            {table.getPageCount()}
-          </p>
-        </span>
-        <div>
-          <button
-            className="btn"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<<'}
-          </button>
-          <button
-            className="btn"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<'}
-          </button>
-          <button
-            className="btn"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>'}
-          </button>
-          <button
-            className="btn"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>>'}
-          </button>
-        </div>
-      </div>
     </>
   );
 };
