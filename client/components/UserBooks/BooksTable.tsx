@@ -43,16 +43,16 @@ const columns = [
     header: 'Title',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('status', {
-    header: 'Status',
+  columnHelper.accessor('score', {
+    header: 'Score',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('review', {
     header: 'Review',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('score', {
-    header: 'Score',
+  columnHelper.accessor('status', {
+    header: 'Status',
     cell: (info) => info.getValue(),
   }),
 ];
@@ -71,11 +71,14 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
   });
 
   return (
-    <>
-      <table className="mt-4 w-full border-separate border-spacing-y-0 rounded-lg bg-background-variant">
-        <thead className="text-left">
+    <div className="overflow-x-auto">
+      <table className="mt-4 w-full table-fixed border-separate border-spacing-y-0 rounded-lg bg-background-variant max-[830px]:table-auto">
+        <thead className="cursor-pointer select-none overflow-hidden text-left">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr
+              className="text-center [&>*:first-child]:w-24 [&>*:nth-child(2)]:w-1/2 [&>*:nth-child(2)]:text-left"
+              key={headerGroup.id}
+            >
               {headerGroup.headers.map((header) => {
                 return (
                   <th
@@ -108,13 +111,16 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="overflow-auto whitespace-nowrap text-center">
           {table
             .getRowModel()
             .rows.slice(0, 10)
             .map((row) => {
               return (
-                <tr key={row.id} className="hover:bg-primary">
+                <tr
+                  key={row.id}
+                  className="cursor-pointer hover:bg-primary [&>*:nth-child(2)]:text-left"
+                >
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td key={cell.id}>
@@ -130,7 +136,7 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
             })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

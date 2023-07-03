@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  /* Customize the scrollbar track */
+  background-color: theme("colors.background-variant");
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: theme("colors.secondary");
+}
+
 @layer base {
   body {
     background-color: theme("colors.background");

@@ -47,7 +47,7 @@ const Home: NextPage = () => {
     <div>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-1/2 m-auto my-8"
+        className="flex flex-col w-1/2 my-8 mx-8"
       >
         <input
           type="text"
