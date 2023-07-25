@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -35,7 +35,7 @@ const columns = [
             : '/default-cover.png'
         }
         alt="cover"
-        className="rounded-md shadow"
+        className="rounded-md"
       />
     ),
   }),
@@ -71,14 +71,11 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
   });
 
   return (
-    <div className="overflow-x-auto">
-      <table className="mt-4 w-full table-fixed border-separate border-spacing-y-0 rounded-lg bg-background-variant max-[830px]:table-auto">
-        <thead className="cursor-pointer select-none overflow-hidden text-left">
+    <div className="overflow-x-auto mb-24">
+      <table className="mt-4 w-full table-fixed border-separate border-spacing-y-4 max-[830px]:table-auto">
+        <thead className="select-none overflow-hidden">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr
-              className="text-center [&>*:first-child]:w-24 [&>*:nth-child(2)]:w-1/2 [&>*:nth-child(2)]:text-left"
-              key={headerGroup.id}
-            >
+            <tr className="[&>*:nth-child(2)]:text-left [&>*:nth-child(1)]:text-left [&>*:nth-child(1)]:pl-5" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
                   <th
@@ -100,8 +97,8 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
                           header.getContext(),
                         )}
                         {{
-                          asc: ' ↑',
-                          desc: ' ↓',
+                          asc: '↑',
+                          desc: '↓',
                         }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     )}
@@ -117,13 +114,13 @@ const BooksTable = ({ userBooks }: BooksTableProps) => {
             .rows.slice(0, 10)
             .map((row) => {
               return (
-                <tr
-                  key={row.id}
-                  className="cursor-pointer hover:bg-primary [&>*:nth-child(2)]:text-left"
-                >
+                <tr key={row.id} className="[&>*:nth-child(2)]:text-left [&>*:nth-child(1)]:text-left">
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id}>
+                      <td
+                        key={cell.id}
+                        className="border-t border-primary-500"
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

@@ -19,12 +19,12 @@ const Book = ({ book }: BookProps) => {
   const { title, author_name, cover_i } = book;
   return (
     <>
-      {modal ? <AddBook setModal={setModal} book={book} /> : null}
-      <div className="w-52 group">
-        <div className="hidden group-hover:flex w-[200px] h-[360px] absolute justify-end items-end z-10">
+      {modal ? <AddBook modal={modal} setModal={setModal} book={book} /> : null}
+      <div className="group w-52">
+        <div className="absolute z-10 hidden h-[360px] w-[200px] items-end justify-end group-hover:flex">
           {/* TODO: change button color */}
           <button
-            className="bg-primary w-8 h-8 rounded-3xl text-white"
+            className="h-8 w-8 bg-primary-500 rounded-lg"
             onClick={() => setModal(true)}
           >
             +
@@ -41,8 +41,8 @@ const Book = ({ book }: BookProps) => {
           alt="cover"
           className="rounded-md shadow"
         />
-        <h2 className="font-bold text-sm">{title}</h2>
-        <h3 className="text-sm">{author_name}</h3>
+        <h2 className="text-sm font-bold truncate">{title}</h2>
+        <h3 className="text-sm text-foreground-400">{author_name}</h3>
       </div>
     </>
   );

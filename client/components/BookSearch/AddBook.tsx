@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { postBook } from '../../api/books';
 import { useMutation, useQueryClient } from 'react-query';
+import { Dialog } from '@headlessui/react';
 
 type IFormInputs = {
   book_id: string;
@@ -40,7 +41,7 @@ type AddBookProps = {
   book: BookType;
 };
 
-const AddBook = ({ setModal, book }: AddBookProps) => {
+const AddBook = ({ modal, setModal, book }: AddBookProps) => {
   const { title, author_name, cover_i, key } = book;
   const {
     register,
@@ -73,42 +74,38 @@ const AddBook = ({ setModal, book }: AddBookProps) => {
   };
 
   return (
-    <div className="fixed z-10 bg-gray-900 bg-opacity-80 flex items-center justify-center top-0 left-0 right-0 z-50 w-full h-full p-4 overflow-x-hidden overflow-y-auto md:inset-0">
-      <div className="pointer-events-auto relative w-full max-w-md md:h-auto">
-        <div className="relative rounded-lg shadow bg-background">
-          <button
-            type="button"
-            className="absolute top-6 right-2.5 text-gray-400 rounded-lg text-sm p-1.5 ml-auto  items-center hover:bg-background-color-2 hover:text-white"
-            onClick={() => setModal(false)}
-          >
-            X
-          </button>
-          <div className="px-6 py-6 lg:px-8">
-            <div className="flex flex-row items-center mb-4">
-              <div className="w-24">
-                <Image
-                  height={1920}
-                  width={1080}
-                  src={
-                    cover_i
-                      ? `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg`
-                      : '/default-cover.png'
-                  }
-                  className="rounded-md shadow"
-                />
-              </div>
-              <div>
-                <h3 className="ml-4 text-xl font-medium text-white">{title}</h3>
-                <h4 className="ml-4 text-sm font-medium text-white">
-                  {author_name}
-                </h4>
-              </div>
+    <Dialog
+      open={modal}
+      onClose={() => setModal(false)}
+      className="relative z-10"
+    >
+      <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+      <div className="fixed inset-0 flex items-center justify-center">
+        <Dialog.Panel className="w-4/5 md:w-8/12 lg:w-4/12 rounded-lg bg-background-500 p-8 p-4">
+          <Dialog.Title className="mb-4 flex flex-row items-center text-center">
+            <div className="w-24">
+              <Image
+                height={1920}
+                width={1080}
+                src={
+                  cover_i
+                    ? `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg`
+                    : '/default-cover.png'
+                }
+                className="rounded-md shadow"
+              />
             </div>
+            <div className='w-full'>
+              <h3 className="text-xl font-bold">{title}</h3>
+              <h4 className="text-sm text-foreground-400">
+                {author_name}
+              </h4>
+            </div>
+          </Dialog.Title>
+          <Dialog.Description>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
-                <label className="block mb-2 text-sm font-medium text-white">
-                  Status
-                </label>
+                <label className="mb-2 block text-sm font-medium">Status</label>
                 <select defaultValue="to-read" {...register('status')}>
                   <option value="to-read">To read</option>
                   <option value="currently-reading">Currently reading</option>
@@ -118,39 +115,41 @@ const AddBook = ({ setModal, book }: AddBookProps) => {
               </div>
 
               <div>
-                <label className="block mb-2 text-sm font-medium text-white">
-                  Score
-                </label>
+                <label className="mb-2 block text-sm font-medium">Score</label>
                 <input
                   placeholder="0"
                   type="number"
-                  className="text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                  className="block w-full rounded-lg text-sm placeholder-gray-400 focus:ring-blue-500"
                   {...register('score')}
                 />
                 <p>{errors.score?.message}</p>
               </div>
 
               <div>
-                <label className="block mb-2 text-sm font-medium text-white">
-                  Review
-                </label>
+                <label className="mb-2 block text-sm font-medium">Review</label>
                 <input
-                  className="text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 placeholder-gray-400 text-white"
+                  className="block w-full rounded-lg text-sm placeholder-gray-400 focus:ring-blue-500"
                   {...register('review')}
                 />
                 <p>{errors.review?.message}</p>
               </div>
 
-              <div className="flex justify-end">
+              <div className="flex justify-between">
+                <button
+                  onClick={() => setModal(false)}
+                  className="btn btn-secondary"
+                >
+                  Cancel
+                </button>
                 <button type="submit" className="btn btn-primary">
                   Save
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+          </Dialog.Description>
+        </Dialog.Panel>
       </div>
-    </div>
+    </Dialog>
   );
 };
 
