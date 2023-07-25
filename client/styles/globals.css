@@ -1,31 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  height: 4px;
+  height: 5px;
   width: 4px;
 }
 
 ::-webkit-scrollbar-track {
   /* Customize the scrollbar track */
-  background-color: theme("colors.background-variant");
+  background-color: theme("colors.background.500");
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: theme("colors.secondary");
+  background-color: theme("colors.background.600");
 }
 
 @layer base {
   body {
-    background-color: theme("colors.background");
-    @apply text-white;
+    background-color: theme("colors.background.500");
+    color: theme("colors.foreground.500");
+    @apply font-inter;
   }
   input {
-    @apply block w-full rounded-lg bg-background-variant p-2.5  text-sm text-white placeholder-gray-400 selection:border-none focus:ring-blue-500;
+    @apply block w-full rounded-md border border-background-600 bg-background-400 p-2.5 text-sm placeholder-gray-400 placeholder-foreground-300 focus:outline-none selection:bg-secondary-500;
   }
   select {
-    @apply block w-full rounded-lg bg-background-variant p-2.5 text-sm text-white placeholder-gray-400;
+    @apply block w-full rounded-md border border-background-600 bg-background-400 p-2.5 text-sm placeholder-gray-400 selection:border-none focus:outline-none;
   }
   tbody {
     @apply px-8;
@@ -38,9 +42,12 @@
 
 @layer components {
   .btn {
-    @apply rounded-lg px-5 py-2.5 text-sm font-medium text-white focus:outline-none;
+    @apply rounded-lg px-5 py-2.5 text-sm text-background-500 focus:outline-none;
   }
   .btn-primary {
-    @apply bg-primary hover:bg-primary-variant;
+    @apply bg-primary-500 text-foreground-500 hover:bg-primary-600;
+  }
+  .btn-secondary {
+    @apply bg-secondary-500 text-foreground-500 hover:bg-secondary-600;
   }
 }
