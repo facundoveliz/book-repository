@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { NextPage } from 'next';
 import '../styles/globals.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import Header from '../components/Header';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -25,6 +26,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
+        <Header />
         <Component {...pageProps} />
       </Layout>
     </QueryClientProvider>
