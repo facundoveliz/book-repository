@@ -20,7 +20,7 @@ const Book = ({ book }: BookProps) => {
   return (
     <>
       {modal ? <AddBook modal={modal} setModal={setModal} book={book} /> : null}
-      <div className="group w-52">
+      <div className="group w-52 grow">
         <div className="absolute z-10 hidden h-[360px] w-[200px] items-end justify-end group-hover:flex">
           {/* TODO: change button color */}
           <button

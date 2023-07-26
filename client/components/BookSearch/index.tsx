@@ -80,11 +80,11 @@ const Home: NextPage = () => {
       ) : getBooksMutation.isError ? (
         <div>An error has ocurred!</div>
       ) : (
-        <div className="flex justify-center">
+        <div className="flex p-8">
           {!books ? (
             <div>No books founded 😔</div>
           ) : (
-            <div className="m-8 grid w-full grid-cols-auto-fit gap-8">
+            <div className="w-full flex flex-wrap gap-4 justify-between">
               {books.map((book) => {
                 if (book.cover_i) {
                   return <Book book={book} key={book.key} />;
