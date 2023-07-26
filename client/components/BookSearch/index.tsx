@@ -84,7 +84,7 @@ const Home: NextPage = () => {
           {!books ? (
             <div>No books founded 😔</div>
           ) : (
-            <div className="w-full flex flex-wrap gap-4 justify-between">
+            <div className="w-full flex flex-wrap gap-4">
               {books.map((book) => {
                 if (book.cover_i) {
                   return <Book book={book} key={book.key} />;
